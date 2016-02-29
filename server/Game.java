@@ -37,7 +37,7 @@ public class Game
         //Check for pawn promotion
         if (sp.type==PieceType.PAWN && e.y==7) {
             
-            sendThis = BoardPrinter.print(new HashSet<Location>(),new HashSet<Location>(){{add(e);}},board.getBoard());
+            sendThis = BoardPrinter.print(new HashSet<Location>(),new HashSet<Location>(){{add(e);}},board.getBoardIfMove(sp,e));
             sendThis += "Pawn promoted to (Rook, Knight, Bishop, Queen):\n:";
             PieceType pt = p.pawnPromotion(sendThis);
             
@@ -45,6 +45,7 @@ public class Game
                 return false;
             }
             
+            sp.moveTo(e,board);
             board.removePiece(sp);
             board.createPiece(pt,board.getTurn(),e);
             
